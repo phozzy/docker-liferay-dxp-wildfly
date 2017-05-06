@@ -15,7 +15,7 @@ ENV LIFERAY_DEPS_SHA1 "22c0d1bd47c5945bd1a365b0e0bec31885dfd97d"
 ENV WILDFLY_STANDALONE_CFG $JBOSS_HOME/standalone/configuration/standalone.xml
 
 # Coping file
-COPY files $HOME/files
+COPY files /opt/jboss/files
 
 # USER root
 
@@ -47,7 +47,7 @@ RUN cd $HOME \
     && unzip liferay-ce-portal-dependencies-$LIFERAY_VERSION_FULL.zip -d $JBOSS_HOME/modules/com/liferay/portal \
     && rm liferay-ce-portal-dependencies-$LIFERAY_VERSION_FULL.zip \
     && mv $JBOSS_HOME/modules/com/liferay/portal/liferay-ce-portal-dependencies-* $JBOSS_HOME/modules/com/liferay/portal/main \
-    && cp $HOME/files/module.xml $JBOSS_HOME/module/com/liferay/portal/main/
+    && cp $HOME/files/module.xml $JBOSS_HOME/modules/com/liferay/portal/main/
 
 # Configuration
 RUN set -i -e '/<paths/r $HOME/files/standalone-systemmodule.xml' $JBOSS_HOME/modules/system/layers/base/sun/jdk/main/module.xml
@@ -60,7 +60,9 @@ RUN sed -i '/org.jboss.as.weld/d' $WILDFLY_STANDALONE_CFG \
 RUN cat $HOME/files/standalone.conf >> $JBOSS_HOME/bin/standalone.conf
 
 # Cleanup
+USER root
 RUN rm -rf $HOME/files
+USER jboss
 
 # Set the default command to run on boot
 # This will boot liferay in the standalone mode and bind to all interface
