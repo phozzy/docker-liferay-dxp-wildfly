@@ -61,7 +61,7 @@ RUN cat $HOME/files/standalone.conf >> $JBOSS_HOME/bin/standalone.conf
 
 # Cleanup
 USER root
-RUN rm -rf $HOME/files
+RUN rm -rf /opt/jboss/files
 USER jboss
 
 # Set the default command to run on boot
