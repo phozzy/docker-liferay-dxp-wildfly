@@ -41,7 +41,7 @@ RUN cd $HOME \
 
 # Installation: liferay-ce-portal-dependencies
 RUN cd $HOME \
-    && curl -L -O "http://downloads.sourceforge.net/project/lportal/Liferay Portal/$LIFERAY_VERSION/liferay-ce-portal-dependencies-$LIFERAY_VERSION_FULL.zip"
+    && curl -L -O "http://downloads.sourceforge.net/project/lportal/Liferay Portal/$LIFERAY_VERSION/liferay-ce-portal-dependencies-$LIFERAY_VERSION_FULL.zip" \
     && sha1sum liferay-ce-portal-dependencies-$LIFERAY_VERSION_FULL.zip | grep $LIFERAY_DEPS_SHA1 \
     && mkdir -p $JBOSS_HOME/modules/com/liferay/portal \
     && unzip liferay-ce-portal-dependencies-$LIFERAY_VERSION_FULL.zip -d $JBOSS_HOME/modules/com/liferay/portal \
